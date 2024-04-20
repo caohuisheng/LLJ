@@ -12,9 +12,10 @@ import java.time.LocalDateTime;
 @Data
 public class HotActivity {
     private Long id;
-    private String picture; //图片
-    private Integer total; //参加总人数
-    private String details; //详情
+    private Integer type; //1-拍照摄影 2-社交健身
+    private String title;
+    private String details;
+    private String picture;
 
     @TableField(fill=FieldFill.INSERT)
     private Long createUser;

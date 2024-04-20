@@ -33,8 +33,9 @@ public class SuggestRemarkController {
     @GetMapping("/suggest/remark/page")
     public R<IPage<SuggestRemark>> queryByPageAndId(int start,int pageSize){
         IPage<SuggestRemark> page = new Page<>(start,pageSize);
-        remarkService.page(page,null);
-        log.info(page.toString());
+        LambdaQueryWrapper<SuggestRemark> lqw = new LambdaQueryWrapper<>();
+        lqw.orderByDesc(SuggestRemark::getCreateTime);
+        remarkService.page(page,lqw);
         return R.success(page);
     }
 }

@@ -1,11 +1,14 @@
 package com.llj.config;
 
 import com.llj.common.JacksonObjectMapper;
+import com.llj.interceptor.JwtTokenUserInterceptor;
 import lombok.extern.slf4j.Slf4j;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.http.converter.HttpMessageConverter;
 import org.springframework.http.converter.json.MappingJackson2HttpMessageConverter;
+import org.springframework.web.servlet.config.annotation.InterceptorRegistry;
 import org.springframework.web.servlet.config.annotation.ResourceHandlerRegistry;
 import org.springframework.web.servlet.config.annotation.WebMvcConfigurationSupport;
 
@@ -14,6 +17,10 @@ import java.util.List;
 @Configuration
 @Slf4j
 public class WebMvcConfig extends WebMvcConfigurationSupport {
+
+    @Autowired
+    private JwtTokenUserInterceptor jwtTokenUserInterceptor;
+
     /**
      * 设置静态资源映射
      * @param
@@ -27,6 +34,17 @@ public class WebMvcConfig extends WebMvcConfigurationSupport {
     //    registry.addResourceHandler("/backend/**").addResourceLocations("classpath:/backend/");
     //    registry.addResourceHandler("/front/**").addResourceLocations("classpath:/front/");
     //}
+
+    /**
+     * 注册自定义拦截器
+     * @param registry
+     */
+    @Override
+    protected void addInterceptors(InterceptorRegistry registry) {
+        log.info("开始注册自定义拦截器...");
+        registry.addInterceptor(jwtTokenUserInterceptor)
+                .excludePathPatterns("/register","/login","/logout","/common/sendcode","/common/download");
+    }
 
     /*
     扩展mvc框架的消息转换器

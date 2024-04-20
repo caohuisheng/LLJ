@@ -40,9 +40,7 @@ public class SuggestServiceImpl extends ServiceImpl<SuggestDao, Suggest> impleme
         // 分页查询
         IPage<Suggest> page = new Page<>(current,pageSize);
         LambdaQueryWrapper<Suggest> lqw = new LambdaQueryWrapper<>();
-        lqw.eq(Suggest::getType,type);
-        lqw.like(title!=null,Suggest::getTitle,title);
-        lqw.orderByDesc(Suggest::getCreateTime);
+        lqw.eq(Suggest::getType,type).like(title!=null,Suggest::getTitle,title).orderByDesc(Suggest::getCreateTime);
         IPage<Suggest> pageInfo = this.page(page, lqw);
         //为每个suggest添加评论列表信息
         //IPage<SuggestDto> newPageInfo = new Page<>();

@@ -1,6 +1,6 @@
 # 应用服务 WEB 访问端口
 server:
-  port: 8080
+  port: 80
 spring:
   datasource:
     druid:
@@ -16,8 +16,18 @@ mybatis-plus:
     db-config:
       id-type: auto #主键自增策略为按照数据库
 
+
 logging:
   level:
     root: info
 
+llj:
+  filepath: D:\temp\llj\img\
+  jwt:
+    # 设置jwt签名加密时使用的秘钥
+    user-secret-key: llj
+    # 设置jwt过期时间
+    user-ttl: 360000000
+    # 设置前端传递过来的令牌名称
+    user-token-name: token
 
